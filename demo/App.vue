@@ -1,66 +1,78 @@
 <template>
-    <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png"/>
-        <div class="container">
-            <div class="row mt-5 text-center">
-                <div class="col-6 offset-3">
-                    <a href="./csv-sample.csv" target="_blank">Example CSV</a>
-                </div>
-            </div>
-            <section class="py-5">
-                <div class="row mt-5">
-                    <div class="col-8 offset-2">
-                        <h4>Source:</h4>
-                        <pre><code>&lt;vue-csv-import v-model="csv" :map-fields="['name', 'age']"&gt;&lt;/vue-csv-import&gt;</code></pre>
-                    </div>
-                </div>
-                <div class="row mt-5">
-                    <div class="col-8 offset-2">
-                        <h4 class="mb-4">Result:</h4>
-                        <vue-csv-import v-model="csv" :map-fields="['name', 'age']"></vue-csv-import>
-                        <div class="mt-2">
-                            {{ csv }}
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
+  <div id="app">
+    <section>
+      <h1>Vue CSV Loader Powered by DSL Team, SLK Software</h1>
+    </section>
+
+    <section>
+      <csv-loader
+        v-on:loadSuccess="loadSuccess"
+        :defaultHeaderRowCount="1"
+        headerRowCountLabelText="Headers Row count"
+        uploadButtonLabelText="CSV File"
+        uploadButtonText="Choose file.."
+      ></csv-loader>
+    </section>
+
+    <section class="table-container">
+      <table class="table is-bordered is-hoverable is-fullwidth">
+        <thead>
+          <tr v-for="(row, rowIndex) in csvHeader" v-bind:key="rowIndex">
+            <td v-if="showCheckbox && rowIndex === 0">
+              <input type="checkbox" />
+            </td>
+            <th v-for="(data, colIndex) in row" v-bind:key="colIndex">{{ data }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(row, rowIndex) in csvBody" v-bind:key="rowIndex">
+            <td v-if="showCheckbox">
+              <input type="checkbox" @change="onCheckBoxCheck(row)" />
+            </td>
+            <td v-for="(data, colIndex) in row" v-bind:key="colIndex">{{ data }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "app",
-        data() {
-            return {
-                csv: null,
-            };
-        }
+import CsvLoader from "./components/CsvLoader.vue";
+export default {
+  name: "app",
+  components: {
+    CsvLoader
+  },
+  data: function() {
+    return {
+      showCheckbox: true,
+      csvHeader: [],
+      csvBody: []
     };
+  },
+  methods: {
+    loadSuccess: function(result) {
+      this.csvHeader = result.csvHeader;
+      this.csvBody = result.csvBody;
+    }
+  }
+};
 </script>
 
 <style>
-    #app {
-        font-family: "Avenir", Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
-
-    .container {
-        text-align: left;
-    }
-
-    pre code {
-        background-color: #eee;
-        border: 1px solid #999;
-        display: block;
-        padding: 20px;
-    }
-
-    #app .form {
-        text-align: left;
-    }
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+section {
+  margin: 1em;
+}
+table {
+  table-layout: auto;
+}
 </style>

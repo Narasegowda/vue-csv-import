@@ -6,7 +6,7 @@
   "author": "John Gile",
   "scripts": {
     "serve": "vue-cli-service serve ./demo/main",
-    "build": "vue-cli-service build --target lib --name VueCsvImport src/index.js",
+    "build": "vue-cli-service build ./demo/main",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "build:demo": "vue-cli-service --mode development build --dest ./dist/demo ./demo/main"
@@ -21,7 +21,9 @@
     "lodash": "^4.17.15",
     "mime-types": "^2.1.24",
     "papaparse": "^5.0.0",
-    "vue": "^2.5.22"
+    "vue": "^2.5.22",
+    "bulma": "^0.7.5",
+    "encoding-japanese": "^1.0.29"
   },
   "devDependencies": {
     "@vue/cli": "^4.2.2",
@@ -36,10 +38,14 @@
     "babel-jest": "^23.6.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "bulma": "^0.7.5",
+    "encoding-japanese": "^1.0.29"
   },
   "peerDependencies": {
-    "vue": "^2.5.22"
+    "vue": "^2.5.22",
+    "bulma": "^0.7.5",
+    "encoding-japanese": "^1.0.29"
   },
   "bugs": {
     "url": "https://github.com/jgile/vue-csv-import/issues"
